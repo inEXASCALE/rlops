@@ -1,0 +1,36 @@
+{
+  "config_id": "4",
+  "name": "results_pde4",
+  "tol": 1e-08,
+  "c1": 1.0,
+  "c2": 1.0,
+  "label": "W2, tol=1e-8",
+  "num_train": 100,
+  "num_test": 100,
+  "train_size_min": 100,
+  "train_size_max": 500,
+  "test_size_min": 100,
+  "test_size_max": 500,
+  "episodes": 100,
+  "top_k": 25,
+  "precisions": [
+    "bf16",
+    "tf32",
+    "fp32",
+    "fp64"
+  ],
+  "data_dir": "/home/xinye/rlops/papers/pde/data_pde",
+  "rhs_mode": "smooth",
+  "cond_method": "auto",
+  "dense_cond_limit": 700,
+  "seed": 3407,
+  "families": [
+    "poisson_2d",
+    "anisotropic_poisson_2d",
+    "high_contrast_diffusion_2d",
+    "convection_diffusion_2d"
+  ],
+  "max_iter": 9999,
+  "max_inner_iter": 1,
+  "max_stagnation": 3
+}

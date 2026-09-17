@@ -1,0 +1,2 @@
+Condition Range,Num Matrices,Success Rate,bf16,tf32,fp32,fp64
+results,100,1.0,0.0,0.0,0.01,3.99

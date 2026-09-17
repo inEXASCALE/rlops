@@ -1,0 +1,20 @@
+{
+  "avg_rl_error": 0.011328433693738617,
+  "avg_rl_nbe": 2.384458477882879e-07,
+  "avg_rl_rho": 5.733806928887896e-06,
+  "avg_rl_cbe": 9.573625338680522e-13,
+  "avg_rl_iterations": 2.05,
+  "avg_rl_gmres_iterations": 12.75,
+  "avg_fp64_error": 3.88693582519576e-11,
+  "avg_fp64_nbe": 6.457207156480702e-17,
+  "avg_fp64_rho": 2.0377655070122485e-15,
+  "avg_fp64_cbe": 9.678498419370233e-13,
+  "avg_fp64_iterations": 2.0,
+  "avg_fp64_gmres_iterations": 2.0,
+  "sum_precision_usage": {
+    "bf16": 1,
+    "tf32": 0,
+    "fp32": 7,
+    "fp64": 392
+  }
+}
