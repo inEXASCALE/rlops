@@ -14,8 +14,8 @@ def main(argv: Iterable[str] | None = None) -> None:
     parser.set_defaults(
         data_dir="generated_data/cross_regime_dense_train_low_medium_test",
         output_dir="results_cpu_cross_regime",
-        train_cond_regimes="low,medium,high",
-        test_cond_regimes="low,medium",
+        train_cond_regimes="low,medium",
+        test_cond_regimes="low,medium,high",
         tolerances="1e-6",
     )
     args = parser.parse_args(argv)

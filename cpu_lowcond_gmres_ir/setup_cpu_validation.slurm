@@ -9,7 +9,7 @@
 
 set -euo pipefail
 
-cd "$HOME/rlops/papers/cpu_lowcond_gmres_ir"
+cd "$HOME/rlops/cpu_lowcond_gmres_ir"
 
 module purge
 module load python/anaconda3
@@ -29,8 +29,8 @@ PY
   --test-count 100 \
   --size-min 1000 \
   --size-max 1500 \
-  --train-regimes low,medium,high \
-  --test-regimes low,medium \
+  --train-regimes low,medium \
+  --test-regimes low,medium,high \
   --overwrite
 
 mkdir -p build

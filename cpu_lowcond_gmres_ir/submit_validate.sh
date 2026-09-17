@@ -19,6 +19,8 @@ COMMON_ARGS=( \
   --gmres-cycles 1 \
   --gmres-tol 1e-4 \
   --backward-tol 1e-14 \
+  --train-cond-regimes low,medium \
+  --test-cond-regimes low,medium,high \
 )
 
 python validate_cross_regime_cpu_policies.py "${COMMON_ARGS[@]}"

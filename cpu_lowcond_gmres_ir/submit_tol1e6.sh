@@ -19,6 +19,8 @@ COMMON_ARGS=( \
   --gmres-cycles 1 \
   --gmres-tol 1e-4 \
   --backward-tol 1e-14 \
+  --train-cond-regimes low,medium \
+  --test-cond-regimes low,medium,high \
 )
 
 python train_cross_regime_cpu_tol1e6.py "${COMMON_ARGS[@]}"

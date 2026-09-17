@@ -64,11 +64,11 @@ Training and validation use a fixed-budget invariant: within one run, every lega
 For irp3-compatible validation, use `--repeats 3 --outer-max-iters 10 --gmres-tol 1e-4 --gmres-max-iters 0 --gmres-cycles 1`. For a cheaper budgeted RL sweep, use the same values except set `--gmres-max-iters 10` or `30`.
 
 
-## Cross-Regime Training / Low-Medium Validation
+## Low/Medium Training / Cross-Regime Validation
 
-Use this variant when you want the RL policy to train on a dense-test-style mix
-of low, medium, and high condition-number systems, then evaluate on a mixed
-low- and medium-condition CPU GMRES-IR benchmark.  The action space remains exactly
+Use this variant when you want the RL policy to train on low- and
+medium-condition systems, then evaluate on a cross-regime CPU GMRES-IR benchmark
+spanning low, medium, and high condition numbers.  The action space remains exactly
 `fp16`/`fp32`/`fp64` for `[uf, ug, u, ur]`, and the native C++ validation budget
 is shared across every precision action in a run.
 
@@ -79,8 +79,8 @@ Condition regimes are sampled as log10 condition-number ranges:
 - `high`: `10^6`--`10^9`
 
 The default split uses 50 training systems and 100 testing systems.
-Training cases cycle through `low,medium,high`; test cases alternate between
-`low,medium`.
+Training cases cycle through `low,medium`; test cases cycle through
+`low,medium,high`.
 
 Recommended split native commands for the cluster validation budget discussed
 with `irp3`:
@@ -96,6 +96,8 @@ COMMON_ARGS=( \
   --gmres-cycles 1 \
   --gmres-tol 1e-4 \
   --backward-tol 1e-14 \
+  --train-cond-regimes low,medium \
+  --test-cond-regimes low,medium,high \
 )
 
 python train_cross_regime_cpu_tol1e6.py "${COMMON_ARGS[@]}" \
@@ -119,41 +121,53 @@ Outputs are written under `results_cpu_cross_regime/` and
 `figures_cpu_cross_regime/`.  `policy.json` and `summary.csv` record
 `train_condition_regimes`, `test_condition_regimes`, `validation_budget`, and
 `validation_budget_id` so the cross-regime result is auditable against the
-low-only run.  For this runner, `test_condition_regimes` defaults to
-`low,medium`.
+low-only run.  For this runner, `train_condition_regimes` defaults to
+`low,medium` and `test_condition_regimes` defaults to `low,medium,high`.
 
 
 
 
 ### Alternative run
 
-This will generate identical result
+This will generate identical results.
 
-Condiguration and setup:
+Configuration and setup:
 
-'''bash
-COMMON_ARGS=(   --mode native   --data-dir generated_data/cross_regime_dense_train_low_medium_test   --output-dir results_cpu_cross_regime   --train-count 50   --test-count 100   --size-min 1000   --size-max 1500   --train-cond-regimes low,medium   --test-cond-regimes low,medium,high   --episodes 100 )
-'''
+```bash
+COMMON_ARGS=( \
+  --mode native \
+  --data-dir generated_data/cross_regime_dense_train_low_medium_test \
+  --output-dir results_cpu_cross_regime \
+  --train-count 50 \
+  --test-count 100 \
+  --size-min 1000 \
+  --size-max 1500 \
+  --train-cond-regimes low,medium \
+  --test-cond-regimes low,medium,high \
+  --episodes 100 \
+)
+```
 
 Run in two nodes:
 
 Node 1:
-'''bash
+```bash
 python train_cross_regime_cpu_tol1e6.py "${COMMON_ARGS[@]}"
-'''
+```
 
 
 Node 2:
-'''
+```bash
 python train_cross_regime_cpu_tol1e8.py "${COMMON_ARGS[@]}"
+```
 
-'''
-
-Validate and visualize in any nodes: 
-'''bash
+Validate and visualize on any node:
+```bash
 python validate_cross_regime_cpu_policies.py "${COMMON_ARGS[@]}"
-python plot_cpu_lowcond_results.py   --input-dir results_cpu_cross_regime   --output-dir figures_cpu_cross_regime
-'''
+python plot_cpu_lowcond_results.py \
+  --input-dir results_cpu_cross_regime \
+  --output-dir figures_cpu_cross_regime
+```
 
 
 
@@ -227,5 +241,4 @@ python run_cpu_lowcond_experiment.py \
   --output-dir /tmp/rlops_cpu_lowcond_native_results \
   --rebuild
 ```
-
 

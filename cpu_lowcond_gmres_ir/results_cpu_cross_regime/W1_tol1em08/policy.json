@@ -61,8 +61,8 @@
   "weight": "W1",
   "tolerance": 1e-08,
   "backward_tolerance_diagnostic": 1e-14,
-  "train_condition_regimes": "low,medium,high",
-  "test_condition_regimes": "low,medium",
+  "train_condition_regimes": "low,medium",
+  "test_condition_regimes": "low,medium,high",
   "policy": {
     "0": "fp64_fp64_fp64_fp64",
     "1": "fp16_fp32_fp64_fp64",

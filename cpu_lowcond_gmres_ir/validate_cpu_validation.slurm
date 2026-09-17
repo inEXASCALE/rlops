@@ -9,7 +9,7 @@
 
 set -euo pipefail
 
-cd "$HOME/rlops/papers/cpu_lowcond_gmres_ir"
+cd "$HOME/rlops/cpu_lowcond_gmres_ir"
 
 module purge
 module load python/anaconda3
@@ -32,6 +32,8 @@ COMMON_ARGS=(
   --gmres-tol 1e-4
   --backward-tol 1e-14
   --episodes 100
+  --train-cond-regimes low,medium
+  --test-cond-regimes low,medium,high
 )
 
 "$PYTHON_BIN" validate_cross_regime_cpu_policies.py "${COMMON_ARGS[@]}"
